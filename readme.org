@@ -1,0 +1,30 @@
+#+title: CL Codes for LapOrk Lecture
+#+author: 凉凉
+* About
+Here's some simple code snippets used in the class:
+Music Technology: Laptop Orchestra.
+
+*Please Note*: They might be messy and may not so well constructed.
+The API of each package exposed is very likely to change.
+And the code might not be supported once this semester finished.
+
+* OSCDef
+Simulate the OSCDef experience in SuperCollider.
+
+Examples:
+
+#+begin_src lisp :package lapork.oscdef
+  (start-osc-listening)
+
+  (oscdef-clear :test)
+
+  ;; OSCDef
+  (oscdef :test (&rest args)
+    (format t "Got ~{~A~^, ~}~%" args))
+
+  ;; OSCDef.add
+  (oscdef+ :test (&rest args)
+    (format t "Sum of args: ~A~%" (reduce #'* args)))
+#+end_src
+
+see [[https://li-yiyang.github.io/lapork/lapork-02/][LapTop Ork (02: Synth, Network)]] (Chinese) [firstly introduced]
