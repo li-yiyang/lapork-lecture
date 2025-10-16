@@ -1,6 +1,10 @@
 ;;;; oscdef.lisp --- Create a OSC server and handles OSC control signals
 
-(uiop:define-package lapork.oscdef
+;;; Dependency:
+
+;; (ql:quickload '(:cl-collider :str))
+
+(uiop:define-package #:lapork.oscdef
   (:use :cl :osc :usocket)
   (:export
    #:*osc-server-running-p*
@@ -66,11 +70,11 @@
                                          :element-type '(unsigned-byte 8)))
                  (buff   (make-sequence '(vector (unsigned-byte 8)) buffer)))
              (unwind-protect
-                  (loop :for msg  := (progn (socket-receive server buff buffer)
-                                            (decode-bundle buff))
-                        :for name := (command msg)
-                        :for args := (args    msg)
-                        :do (osc-apply name args))
+                  (loop :for (timetag . msgs)
+                          := (progn (socket-receive server buff buffer)
+                                    (sc-osc::decode-bundle buff))
+                        :do (dolist (msg msgs)
+                              (apply #'osc-apply msg)))
                (when server (socket-close server)))))
          :name "osc-server")))
 
