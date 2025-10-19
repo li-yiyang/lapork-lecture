@@ -47,11 +47,10 @@
   (when (osc-server-running-p)
     (bt:destroy-thread *osc-server-thread*)))
 
-(defun osc-apply (name args)
-  "Apply ARGS to OSC methods of NAME. "
-  (ignore-errors
-   (dolist (ctrl (gethash name *oscdef-table*))
-     (apply ctrl args))))
+(defun osc-funcall (name &rest args)
+  "Call OSC methods of NAME with ARGS. "
+  (dolist (ctrl (gethash name *oscdef-table*))
+    (apply ctrl args)))
 
 (defun start-osc-server (&key (port *osc-server-port*) (buffer 1024) force restart
                          &aux (restart? (or force restart (= port *osc-server-port*))))
@@ -74,7 +73,7 @@
                           := (progn (socket-receive server buff buffer)
                                     (sc-osc::decode-bundle buff))
                         :do (dolist (msg msgs)
-                              (apply #'osc-apply msg)))
+                              (apply #'osc-funcall msg)))
                (when server (socket-close server)))))
          :name "osc-server")))
 
