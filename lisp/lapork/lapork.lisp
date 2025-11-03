@@ -1,8 +1,11 @@
 ;;;; lapork.lisp --- Like `sc-user' for LapOrk lecture environment
 
 (uiop:define-package #:lapork
-  (:use :cl-collider :common-lisp
-        :lapork.oscdef))
+  (:use
+   :cl-collider
+   :common-lisp
+   :lapork.oscdef
+   :lapork.plot))
 
 (in-package :lapork)
 

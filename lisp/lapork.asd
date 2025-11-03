@@ -1,5 +1,7 @@
 ;;;; lapork.asd --- System definition of LapOrk
 
+(in-package :asdf-user)
+
 (defsystem #:lapork
   :author ("凉凉")
   :license "GPL"

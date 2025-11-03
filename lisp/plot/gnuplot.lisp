@@ -81,6 +81,7 @@
 
 (defun %init (&key title term output &allow-other-keys)
   "Write gnuplot initial code to STREAM. "
+  (write-line "reset" *stream*)
   (when title (write-line "unset title" *stream*))
   (when term  (%init-term term output)))
 
@@ -88,15 +89,13 @@
   "plot [xrange] [yrange] ~{data with color linewidth linecolor~^, ~}"
   (declare (type (or null (cons number number)) xrange yrange))
   (cond (data
-         (unless xrange
-           (write-line "set autoscale x" *stream*))
-         (unless yrange
-           (write-line "set autoscale y" *stream*))
          (write-string "plot " *stream*)
-         (when xrange
-           (format *stream* "[x=~F:~F] " (car xrange) (cdr xrange)))
-         (when yrange
-           (format *stream* "[y=~F:~F] " (car yrange) (cdr yrange)))
+         (if xrange
+             (format *stream* "[x=~F:~F] " (car xrange) (cdr xrange))
+             (write-string "[x=*:*] " *stream*))
+         (if yrange
+             (format *stream* "[y=~F:~F] " (car yrange) (cdr yrange))
+             (write-string "[y=*:*] " *stream*))
          (flet ((write-data (dat)
                   (destructuring-bind
                       (data &key with color title linewidth using &allow-other-keys)
@@ -157,11 +156,18 @@
                   &allow-other-keys)
   (:documentation
    "Prepare to plot DATA. ")
-  (:method :around (data &rest attrs &key term output)
+  (:method :around (data &rest attrs
+                    &key term output xrange yrange
+                      (debug *gnuplot-debug*))
     (declare (ignorable data attrs))
     (if *gnuplot-env*
         (call-next-method)
-        (with-plot (:within-gnuplot-env t :term term :output output)
+        (with-plot (:within-gnuplot-env t
+                    :term term
+                    :output output
+                    :xrange xrange
+                    :yrange yrange
+                    :debug  debug)
           (call-next-method))))
   (:method ((data string) &rest attrs)
     (ensure-attrs attrs (:with *style*))
