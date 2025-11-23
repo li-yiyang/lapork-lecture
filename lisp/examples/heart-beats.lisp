@@ -40,7 +40,19 @@
 
 ;;; OSCDef
 
-(oscdef :heart-beats (gate)
+(oscdef :heart-alive (gate)
   (ctrl *heart* :gate gate))
+
+(oscdef :heart-freq (freq)
+  (ctrl *heart* :freq (+ 0.4 (* 2.5 freq))))
+
+(oscdef :heart-strength (amp)
+  (ctrl *heart* :amp (+ 1 (* 5 amp))))
+
+(oscdef :heart-pan (pan)
+  (ctrl *heart* :pan-freq (* 5 pan)))
+
+(oscdef :heart-freq-delta (d-freq)
+  (ctrl *heart* :d-freq (* 0.5 d-freq)))
 
 ;;;; heart-beats.lisp

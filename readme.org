@@ -28,3 +28,20 @@ Examples:
 #+end_src
 
 see [[https://li-yiyang.github.io/lapork/lapork-02/][LapTop Ork (02: Synth, Network)]] (Chinese) [firstly introduced]
+
+* Examples
+** Phone
+See =lisp/examples/lapork-03/phone.lisp=.
+
+#+html: <video controls width="600" style="display: block; margin: auto;"><source src="./demos/phone.mp4" type="video/mp4" /></video>
+
+** Otamatone
+See =lisp/examples/otamatone.lisp=.
+
+#+html: <video controls width="600" style="display: block; margin: auto;"><source src="./demos/otamatone.mp4" type="video/mp4" /></video>
+
+** Heart-Beats
+See =lisp/examples/heart-beats.lisp=.
+
+#+html: <video controls width="600" style="display: block; margin: auto;"><source src="./demos/heart.mp4" type="video/mp4" /></video>
+
