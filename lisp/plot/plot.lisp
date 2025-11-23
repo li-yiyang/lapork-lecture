@@ -131,4 +131,9 @@
                                             :act :free)))
        (plot ,b ,@attrs))))
 
+(defmacro freqscope (body &rest attrs
+                     &key title color linewidth
+                     &allow-other-keys)
+  )
+
 ;;;; plot.lisp end here

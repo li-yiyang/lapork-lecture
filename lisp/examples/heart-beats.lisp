@@ -2,6 +2,18 @@
 
 (in-package :lapork)
 
+
+;;; Initialize
+
+(boot!)
+(start-osc-server)
+
+;; Clear previous defined OSC def and free all the nodes
+(oscdef-clear)
+
+
+;;; Synthsizer
+
 (defsynth heart ((out 0) (buf 0) (freq 0.8) (d-freq 0.01) (pan-freq 0.01)
                  (amp 0.5) (gate 1) (dur 1.0) (rate 1) (pos 0))
   (let* ((trig (impulse.kr (sc::+~ freq (white-noise.kr d-freq))))
@@ -24,5 +36,11 @@
               (asdf:system-relative-pathname :lapork "../samples/heartbeat.wav")
               :channels '(0))))
     (synth 'heart :buf buf)))
+
+
+;;; OSCDef
+
+(oscdef :heart-beats (gate)
+  (ctrl *heart* :gate gate))
 
 ;;;; heart-beats.lisp
