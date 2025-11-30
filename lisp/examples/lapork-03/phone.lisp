@@ -26,7 +26,7 @@
                     (sin-osc.ar high))
                  (env-gen.kr (adsr 0.01 0.01 0.8 0.01) :gate gate))))
 
-(defparameter phone
+(defparameter *phone*
   (synth 'phone-tone :gate 0))
 
 
@@ -37,12 +37,12 @@
 
 (let ((on/off 0))
   (oscdef :tone-switch (gate)
-    (ctrl phone :gate (setf on/off gate)))
+    (ctrl *phone* :gate (setf on/off gate)))
 
   (oscdef :tone-silent (gate)
     (if (zerop gate) ;; OFF
-        (ctrl phone :gate on/off)
-        (ctrl phone :gate 0))))
+        (ctrl *phone* :gate on/off)
+        (ctrl *phone* :gate 0))))
 
 (macrolet ((tone* (high-freqs &rest tone-table)
              `(progn
@@ -53,8 +53,8 @@
                               :collect
                               `(oscdef ,(format nil "tone~A" tone) (gate)
                                  (if (zerop gate)
-                                     (ctrl phone :low 350  :high 440)
-                                     (ctrl phone :low ,low :high ,high))))
+                                     (ctrl *phone* :low 350  :high 440)
+                                     (ctrl *phone* :low ,low :high ,high))))
                           :into defs
                         :finally (return (apply #'append defs))))))
   (tone* (        1209 1336 1477 1633)
