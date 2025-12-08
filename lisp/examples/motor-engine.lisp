@@ -16,7 +16,7 @@
          (filtered (bpf.ar mix (* 10 freq) 0.1)))
     (out.ar out (* filtered env amp))))
 
-(defparameter *motor* (synth 'motor-engine))
+(defparameter *motor* (synth 'motor-engine :gate 0))
 
 (oscdef :motor-speed (x)
   (ctrl *motor* :freq (+ 12 (* (sqrt x) 50))))
