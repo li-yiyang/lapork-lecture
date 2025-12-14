@@ -1,0 +1,3 @@
+[submodule "op-host/webview"]
+	path = op-host/webview
+	url = https://github.com/webview/webview.git
