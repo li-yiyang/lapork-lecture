@@ -1,6 +1,6 @@
 // CattyDizi.js --- Cat playing Dizi
 
-// use local server host in lapork-lecture/bin/processing-host
+// use local server host in lapork-lecture/op-host/bin/op-host
 
 // ============ Configure =============
 

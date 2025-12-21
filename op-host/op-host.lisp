@@ -12,7 +12,7 @@
 ;;
 ;; ./bin/op-host ../openprocessing/CattyDizi.js
 ;;
-;; having fun... 
+;; having fun...
 
 (ql:quickload '(:cffi :shasht :func2exec :osc :usocket))
 
@@ -23,13 +23,13 @@
 
 (eval-when (:load-toplevel :compile-toplevel :execute)
   (defun libwebview-path ()
-    (merge-pathnames "lib/" (uiop:getcwd)))
+    (merge-pathnames "lib/"
+                     #+sbcl sb-ext:*runtime-pathname*
+                     #-sbcl (uiop:getcwd)))
   (push '(libwebview-path) cffi:*foreign-library-directories*))
 
 (define-foreign-library libwebview
   (t "libwebview.dylib"))
-
-(load-foreign-library 'libwebview)
 
 (defcfun (webview_create "webview_create") :pointer
   (debug  :int)
@@ -119,6 +119,7 @@ function windowResized() {
 
 (defun main (js &key (host *osc-host*) (port *osc-port*))
   "Host Openprocessing JS code. "
+  (load-foreign-library 'libwebview)
   (setf *osc-host* host
         *osc-port* port
         *js*       js)
