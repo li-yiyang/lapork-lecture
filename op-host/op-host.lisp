@@ -23,7 +23,9 @@
 
 (eval-when (:load-toplevel :compile-toplevel :execute)
   (defun libwebview-path ()
-    (merge-pathnames "lib/"
+    ;; /bin/exec
+    ;; /lib/libwebview.dylib
+    (merge-pathnames "../lib/"
                      #+sbcl sb-ext:*runtime-pathname*
                      #-sbcl (uiop:getcwd)))
   (push '(libwebview-path) cffi:*foreign-library-directories*))
@@ -79,7 +81,7 @@
   (result   :string))
 
 (defparameter *osc-host* "localhost")
-(defparameter *osc-port* 2424)
+(defparameter *osc-port* 22243)
 
 ;; (trace osc:encode-message)
 
